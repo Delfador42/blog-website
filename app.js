@@ -1,5 +1,5 @@
 //jshint esversion:6
-
+//project: Blog website with a database
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -76,19 +76,14 @@ app.post("/compose", function(req, res) {
   });
 });
 
-app.get('/posts/:type', function(req, res) {
-  let type = _.lowerCase(req.params.type);
-
-  Post.findOne({
-    title: type
-  }, function(err, foundPost) {
-    if (type === _.lowerCase(foundPost.title)) {
-
+app.get('/posts/:postTitle', function(req, res) {
+  let postTitle = req.params.postTitle;
+  Post.findOne({title: postTitle}, function(err, foundPost) {
       res.render('post', {
         title: foundPost.title,
         post: foundPost.body
       });
-    }
+
   });
 
 });
