@@ -1,12 +1,13 @@
 //jshint esversion:6
 //project: Blog website with a database
+require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
-
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://Commander42:Commander42@cluster0.mg3tp.mongodb.net/Cluster0?retryWrites=true&w=majority', {
+
+mongoose.connect('mongodb+srv://Commander42:' + process.env.DB_PASSWORD + '@cluster0.mg3tp.mongodb.net/Cluster0?retryWrites=true&w=majority', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
