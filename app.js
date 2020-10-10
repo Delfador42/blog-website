@@ -6,7 +6,7 @@ const ejs = require("ejs");
 const _ = require('lodash');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://admin-Josh:Test123@cluster0-6nyeh.mongodb.net/test?retryWrites=true&w=majority/blogDB', {
+mongoose.connect('mongodb+srv://Commander42:Commander42@cluster0.mg3tp.mongodb.net/Cluster0?retryWrites=true&w=majority', {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
@@ -34,8 +34,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 
-app.get("/", function(req, res) {
-  Post.find({}, function(err, returnCollection) {
+app.get("/", function (req, res) {
+  Post.find({}, function (err, returnCollection) {
     if (err) {
       console.log(err)
     } else {
@@ -47,28 +47,28 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("/about", function(req, res) {
+app.get("/about", function (req, res) {
   res.render("About", {
     journalText: aboutContent
   });
 });
 
-app.get("/contact", function(req, res) {
+app.get("/contact", function (req, res) {
   res.render("Contact", {
     journalText: contactContent
   });
 });
 
-app.get("/compose", function(req, res) {
+app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
-app.post("/compose", function(req, res) {
+app.post("/compose", function (req, res) {
   const post = new Post({
     title: req.body.titleEntry,
     body: req.body.journalEntry
   });
-  post.save(function(err) {
+  post.save(function (err) {
     if (!err) {
       res.redirect('/');
     }
@@ -76,22 +76,24 @@ app.post("/compose", function(req, res) {
   });
 });
 
-app.get('/posts/:postTitle', function(req, res) {
+app.get('/posts/:postTitle', function (req, res) {
   let postTitle = req.params.postTitle;
-  Post.findOne({title: postTitle}, function(err, foundPost) {
-      res.render('post', {
-        title: foundPost.title,
-        post: foundPost.body
-      });
+  Post.findOne({
+    title: postTitle
+  }, function (err, foundPost) {
+    res.render('post', {
+      title: foundPost.title,
+      post: foundPost.body
+    });
 
   });
 
 });
 
 
-app.post("/delete", function(req, res) {
+app.post("/delete", function (req, res) {
   const itemID = req.body.deleteButton;
-  Post.findByIdAndRemove(itemID, function(err) {
+  Post.findByIdAndRemove(itemID, function (err) {
     if (!err) {
       res.redirect('/');
     };
@@ -107,6 +109,6 @@ if (port == null || port == "") {
   port = 3000;
 }
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log("Server started on port 3000");
 });
